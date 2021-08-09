@@ -9,6 +9,8 @@
   },
   "scripts": {
     "dev": "ts-node ./script.ts"
+		,"migrate": "prisma migrate dev --name test"
+		,"migratestatus": "prisma migrate status"
   },
   "dependencies": {
     "@prisma/client": "2.28.0"
