@@ -1,0 +1,79 @@
+datasource db{
+  provider =  "postgresql"
+  url =  env("DATABASE_URL")
+}
+
+generator client {
+  provider =  "prisma-client-js"
+}
+
+model LockerTimeLimits {
+  LockerType        Int
+  PickupTimeLimit   Int
+  ReclaimTimeLimit  Int
+  BookingExpiry     Int
+  ShipoutTimeLimit  Int
+  StorageMaxTimeLimit Int
+}
+
+model LockerUserTypes {
+  UserType String
+  Description String
+  MonthlyFee String
+}
+
+model CourierTypes {
+  LockerType
+  CourierType
+  Description
+  MonthlyFee
+}
+
+model SellerTypes {
+  LockerType
+  SellerType
+  Description
+  MonthlyFee
+}
+
+model MessageTemplates {
+  LockerType
+  SendAlertVia
+  SMSMessage
+  AppMessageSameAsSMS
+  AppMessage
+}
+
+model LockerFees {
+  LockerType
+  UserType
+  CourierType
+  SellerType
+  DoorSizes
+  InitialPickupFee
+  InitialReturnCancellationFee
+  InitialShipoutFee
+  StorageFee
+  DropoffFee
+  InitialFreeHours
+  AdditionalOverstayChargesAfterInitialFreeHoursFee
+  AdditionalOverstayChargesAfterInitialFreeHoursEveryHours
+  StorageDuration
+  MaxOverstayCharge
+  CommissionPercentageOnShipoutAmount
+}
+
+model AssignLockerToAgent {
+  Lockers
+  Courier
+  Branch
+  From
+  To
+  Agent
+}
+
+model AssignLockerToBranch {
+  Lockers
+  Courier
+  Branch
+}
