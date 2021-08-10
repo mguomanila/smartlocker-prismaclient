@@ -13,7 +13,7 @@ model User {
   email   String  @unique
 }
 
-enum LockerType {
+enum LockerTypes {
   LockerType1
   LockerType2
   LockerType3
@@ -21,10 +21,12 @@ enum LockerType {
 
 model LockerTimeLimits {
   id Int @id @default(autoincrement())
-  lockerType LockerType
+  lockerType LockerTypes
   pickupTimeLimit Int
-  reclaimTimeLimit Int
+  pickupReclaimTimeLimit Int
   bookingExpiry Int
   shipoutTimeLimit Int
-  storageMaxTimeLimit Int
+  shipoutReclaimTimeLimit Int
+  storageTimeLimit Int
+  storageReclaimTimeLimit Int
 }
