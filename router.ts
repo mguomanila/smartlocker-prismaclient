@@ -4,11 +4,11 @@ import { Router } from 'express'
 const prisma = new PrismaClient
 export const router = Router()
 
-router.get('/lockertimelimits/:id', async (req, res, next) => {
+router.get('/lockertimelimit/:id', async (req, res, next) => {
 	const { id } = req.params
-	const { lockerTimeLimits } = prisma
+	const { lockerTimeLimit } = prisma
 	async function main(){
-		return await lockerTimeLimits.findFirst()
+		return await lockerTimeLimit.findFirst()
 	}
 	const query = await main()
 	res.json(query)
