@@ -6,7 +6,7 @@ async function main(){
 	await prisma.user.create({
 		data: {name: 'marlon', email: 'marlon@localhost.com'}
 	})
-	await prisma.lockerTimeLimits.create({
+	await prisma.lockerTimeLimit.create({
 		data: {
 			lockerType: 'LockerType1',
 			pickupTimeLimit: 0,
@@ -18,7 +18,7 @@ async function main(){
 			storageReclaimTimeLimit: 0,
 		}
 	})
-	const query = await prisma.lockerTimeLimits.findFirst() 
+	const query = await prisma.lockerTimeLimit.findFirst() 
 	console.dir(query, {depth: null})
 }
 

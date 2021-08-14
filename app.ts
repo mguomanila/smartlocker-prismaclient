@@ -3,6 +3,7 @@ import { router } from './router'
 
 const server = express()
 server.use(express.json())
+server.use(express.urlencoded({ extended: true }))
 
 server.use('/api', router)
 const port = 3033
