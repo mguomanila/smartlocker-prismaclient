@@ -14,14 +14,14 @@ model User {
 }
 
 enum LockerType {
-  LockerType1
-  LockerType2
-  LockerType3
+  LockerType1 = 'lockertype1',
+  LockerType2 = 'lockertype2',
+  LockerType3 = 'lockertype3',
 }
 
 model LockerTimeLimit {
   id Int @id @default(autoincrement())
-  lockerType LockerType
+  lockerType String
   pickupTimeLimit Int
   pickupReclaimTimeLimit Int
   bookingExpiry Int

@@ -8,16 +8,31 @@ router.get('/lockertimelimit/:id', async (req, res, next) => {
 	const { id } = req.params
 	const { lockerTimeLimit } = prisma
 	async function main(){
-		return await lockerTimeLimit.findFirst()
+		return await lockerTimeLimit.findUnique({
+			where: { id: parseInt(id) }
+		})
 	}
 	const query = await main()
+	console.log(query)
 	res.json(query)
 })
 
-router.get('/user', async (req, res, next) => {
+router.get('/users', async (req, res, next) => {
 	async function main(){
 		const { user } = prisma
-		return await user.findFirst()
+		return await user.findMany()
+	}
+	const users = await main()
+	res.json(users)
+})
+
+router.get('/user/:id', async (req, res, next) => {
+	const { id } = req.params
+	async function main(){
+		const { user } = prisma
+		return await user.findUnique({
+			where: { id: parseInt(id) }
+		})
 	}
 	const user = await main()
 	res.json(user)
@@ -33,6 +48,18 @@ router.post('/lockertimelimit/:id', async (req, res, next) => {
 			data
 		})
 	}
+	let status, description
 	const query = await main()
-	res.json(query)
+	console.log(query)
+	if(query){
+		status = true
+		description = 'ok'
+	} else {
+		status = false
+		description = 'error'
+	}
+	res.json({
+		status,
+		description,
+	})
 })
