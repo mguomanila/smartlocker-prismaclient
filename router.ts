@@ -4,19 +4,6 @@ import { Router } from 'express'
 const prisma = new PrismaClient
 export const router = Router()
 
-router.get('/lockertimelimit/:id', async (req, res, next) => {
-	const { id } = req.params
-	const { lockerTimeLimit } = prisma
-	async function main(){
-		return await lockerTimeLimit.findUnique({
-			where: { id: parseInt(id) }
-		})
-	}
-	const query = await main()
-	console.log(query)
-	res.json(query)
-})
-
 router.get('/users', async (req, res, next) => {
 	async function main(){
 		const { user } = prisma
@@ -26,7 +13,7 @@ router.get('/users', async (req, res, next) => {
 	res.json(users)
 })
 
-router.get('/user/:id', async (req, res, next) => {
+router.get('/user/id/:id', async (req, res, next) => {
 	const { id } = req.params
 	async function main(){
 		const { user } = prisma
@@ -34,23 +21,61 @@ router.get('/user/:id', async (req, res, next) => {
 			where: { id: parseInt(id) }
 		})
 	}
-	const user = await main()
-	res.json(user)
+	try{
+		const user = await main()
+		if(!user) res.status(202).json({})
+		else res.json(user)
+	}catch(e){ res.status(203).json({}) }
+})
+
+router.get('/user/email/:email', async (req, res, next) => {
+	const { email } = req.params
+	async function main(){
+		const { user } = prisma
+		return await user.findUnique({
+			where: { email }
+		})
+	}
+	try{
+		const user = await main()
+		console.log('user', user)
+		if(!user) res.status(202).json({})
+		else res.json(user)
+	}catch(e){ res.status(203).json({}) }
+})
+
+router.get('/lockertimelimit/:id', async (req, res, next) => {
+	const { id } = req.params
+	const { lockerTimeLimit } = prisma
+	async function main(){
+		return await lockerTimeLimit.findUnique({
+			where: { id: parseInt(id) }
+		})
+	}
+	try{
+		const query = await main()
+		if(!query){
+			res.status(202).send('error')
+		} else {
+			res.json(query)
+		}
+	}catch(e){ res.status(203).send('error') }
 })
 
 router.post('/lockertimelimit/:id', async (req, res, next) => {
 	const { id } = req.params
-	const { data } = req.body
+	const data = req.body.data || req.body
+
 	const { lockerTimeLimit } = prisma
 	async function main(){
 		return await lockerTimeLimit.update({
-			where: { id: <number><unknown>id },
+			where: { id: parseInt(id) },
 			data
 		})
 	}
 	let status, description
 	const query = await main()
-	console.log(query)
+	console.log('post', query)
 	if(query){
 		status = true
 		description = 'ok'
