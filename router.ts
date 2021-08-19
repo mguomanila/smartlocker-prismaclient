@@ -12,9 +12,14 @@ router.get('/lockertimelimit/:id', async (req, res, next) => {
 			where: { id: parseInt(id) }
 		})
 	}
-	const query = await main()
-	console.log(query)
-	res.json(query)
+	try{
+		const query = await main()
+		if(!query){
+			res.status(202).send('error')
+		} else {
+			res.json(query)
+		}
+	}catch(e){ res.status(203).send('error') }
 })
 
 router.get('/users', async (req, res, next) => {
@@ -40,17 +45,18 @@ router.get('/user/:id', async (req, res, next) => {
 
 router.post('/lockertimelimit/:id', async (req, res, next) => {
 	const { id } = req.params
-	const { data } = req.body
+	const data = req.body.data || req.body
+
 	const { lockerTimeLimit } = prisma
 	async function main(){
 		return await lockerTimeLimit.update({
-			where: { id: <number><unknown>id },
+			where: { id: parseInt(id) },
 			data
 		})
 	}
 	let status, description
 	const query = await main()
-	console.log(query)
+	console.log('post', query)
 	if(query){
 		status = true
 		description = 'ok'
