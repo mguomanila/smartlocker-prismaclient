@@ -40,11 +40,12 @@ router.get('/user/:id', async (req, res, next) => {
 
 router.post('/lockertimelimit/:id', async (req, res, next) => {
 	const { id } = req.params
-	const { data } = req.body
+	const data = req.body.data || req.body
+
 	const { lockerTimeLimit } = prisma
 	async function main(){
 		return await lockerTimeLimit.update({
-			where: { id: <number><unknown>id },
+			where: { id: parseInt(id) },
 			data
 		})
 	}
