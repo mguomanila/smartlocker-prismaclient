@@ -12,7 +12,7 @@
     "migrate": "prisma migrate dev --name test",
     "migrate:status": "prisma migrate status",
     "migrate:reset": "prisma reset",
-    "test": "ts-node ./script.ts",
+    "test_db": "ts-node ./script.ts",
     "dev": "nodemon ./app.ts"
   },
   "dependencies": {
