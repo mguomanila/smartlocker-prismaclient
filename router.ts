@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, LockerTimeLimit } from '@prisma/client'
 import { Router } from 'express'
 
 const prisma = new PrismaClient
@@ -38,7 +38,6 @@ router.get('/user/email/:email', async (req, res, next) => {
 	}
 	try{
 		const user = await main()
-		console.log('user', user)
 		if(!user) res.status(202).json({})
 		else res.json(user)
 	}catch(e){ res.status(203).json({}) }
@@ -64,27 +63,29 @@ router.get('/lockertimelimit/:id', async (req, res, next) => {
 
 router.post('/lockertimelimit/:id', async (req, res, next) => {
 	const { id } = req.params
-	const data = req.body.data || req.body
+	const data  = req.body.data || req.body
 
 	const { lockerTimeLimit } = prisma
 	async function main(){
-		return await lockerTimeLimit.update({
+		return await lockerTimeLimit.upsert({
 			where: { id: parseInt(id) },
-			data
+			update: data,
+			create: data,
 		})
 	}
-	let status, description
-	const query = await main()
-	console.log('post', query)
-	if(query){
-		status = true
-		description = 'ok'
-	} else {
-		status = false
-		description = 'error'
+	try{
+		let status, description
+		const query = await main()
+		if(query){
+			status = true
+			description = 'ok'
+		} else {
+			status = false
+			description = 'error'
+		}
+		res.json({ status, description, })
+	} catch (e) { 
+		console.log(e) 
+		res.status(202)
 	}
-	res.json({
-		status,
-		description,
-	})
 })
