@@ -3,5 +3,6 @@ import instruction:
 2. navigate command line to root directory
 3. copy sample.env file to .env
 4. type in command line: `yarn install`
-5. type in command line: `yarn test_db`
-6. type in command line: `yarn dev`
+5. type in command line: `yarn migrate`
+6. type in command line: `yarn test_db`
+7. type in command line: `yarn dev`
