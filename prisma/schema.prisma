@@ -8,20 +8,14 @@ generator client {
 }
 
 model User {
-  id      Int  @id @default(autoincrement())
+  id      BigInt  @id @default(autoincrement())
   name    String?
   email   String  @unique
 }
 
-enum LockerType {
-  LOCKERTYPE1
-  LOCKERTYPE2
-  LOCKERTYPE3
-}
-
 model LockerTimeLimit {
-  id Int @id @default(autoincrement())
-  lockerType LockerType
+  id BigInt @id  @default(autoincrement())
+  lockerType BigInt @db.BigInt
   pickupTimeLimit Int
   pickupReclaimTimeLimit Int
   bookingExpiry Int
@@ -32,16 +26,88 @@ model LockerTimeLimit {
 }
 
 model LockerUserType {
-  id Int @id @default(autoincrement())
+  id BigInt @id  @default(autoincrement())
   lockerUserType String @db.VarChar(64)
-  description String
+  description String @db.Text
   monthlyFee Decimal @db.Decimal(12, 2)
 }
 
 model CourierType {
-  id Int @id @default(autoincrement())
-  lockerType LockerType
+  id BigInt @id  @default(autoincrement())
+  lockerType BigInt @db.BigInt
   courierType String @db.VarChar(64)
-  description String
+  description String @db.Text
   monthlyFee Decimal  @db.Decimal(12, 2)
+}
+
+model Settings {
+  id BigInt @id @default(autoincrement())
+  lockerType BigInt @db.BigInt
+  sendAlertVia String @db.Bit(1)
+  smsMessage String @db.Text
+  appMessageSameAsSms String @db.Bit(1)
+  appMessage String @db.Text
+}
+
+model LockersSearch{
+  id BigInt @id @default(autoincrement())
+  country Int 
+  region Int
+  province Int
+  cityDistrict Int
+  barangay Int
+  lockerType BigInt @db.BigInt
+}
+
+model LockersFees {
+  id BigInt @id @default(autoincrement())
+  lockerType BigInt @db.BigInt
+  userType BigInt @db.BigInt
+  courierType BigInt @db.BigInt
+  sellerType  BigInt @db.BigInt
+  doorSizes BigInt @db.BigInt
+  initialPickupFee Decimal @db.Decimal(12, 2)
+  initialReturnCancellation Decimal @db.Decimal(12, 2)
+  initialShipoutFee Decimal @db.Decimal(12, 2)
+  storageFee  Decimal @db.Decimal(12, 2)
+  dropoffFee  Decimal @db.Decimal(12, 2)
+  initialFeeHours Int 
+  additionalOverstayCharges Decimal @db.Decimal(12, 2)
+  overstayHours Int
+  storageDuration Int
+  maxOverstayCharge Decimal @db.Decimal(12, 2)
+  commisionPercentageOnShipAmount Decimal @db.Decimal(4, 4)
+}
+
+model SellerType{
+  id BigInt @id @default(autoincrement())
+  lockerType BigInt @db.BigInt
+  sellerType String
+  description String @db.Text
+  monthlyFee Decimal @db.Decimal(12, 2)
+}
+
+model MessageTemplate{
+  id BigInt @id  @default(autoincrement())
+  lockerType BigInt @db.BigInt
+  smsMessage String @db.Text
+  appMessage String @db.Text
+  appMessageSameAsSms String @db.Bit(1)
+  sendAlertViaSmsOnly  String @db.Bit(1)
+  sendAlertViaAppOnly  String @db.Bit(1)
+  sendAlertViaBoth  String @db.Bit(1)
+  pickupAlerts String @db.Bit(1)
+  pickupNoticeAlert String @db.Bit(1) 
+  claimedPackageAlert  String @db.Bit(1)
+  overstayAlert String @db.Bit(1)
+  revokedPickupNoticeAlert String @db.Bit(1)
+  removalFromLockerAlert String @db.Bit(1)
+  shipoutAlert String @db.Bit(1)
+  storage String @db.Bit(1)
+  newStorageAlertToRecipient String @db.Bit(1)
+  storageAlertSender String @db.Bit(1)
+  claimedPackageAlertSender String @db.Bit(1)
+  overstayAlertToRecipient String @db.Bit(1)
+  overstayAlertSender String @db.Bit(1)
+  retrievalOverstayAlert String @db.Bit(1)
 }
