@@ -54,7 +54,7 @@ router.get('/lockertimelimit/:id', async (req, res, next) => {
 	const { lockerTimeLimit } = prisma
 	async function main(){
 		return await lockerTimeLimit.findUnique({
-			where: { id: parseInt(id) }
+			where: { userIds: parseInt(id) }
 		})
 	}
 	try{
@@ -77,9 +77,9 @@ router.post('/lockertimelimit/:id', async (req, res, next) => {
 	const { lockerTimeLimit } = prisma
 	async function main(){
 		return await lockerTimeLimit.upsert({
-			where: { id: parseInt(id) },
+			where: { userIds: parseInt(id) },
 			update: data,
-			create: data,
+			create: Object.assign(data, {userIds: parseInt(id)}),
 		})
 	}
 	try{

@@ -15,6 +15,7 @@ model User {
 
 model LockerTimeLimit {
   id Int @id  @default(autoincrement())
+  userIds Int @unique
   lockerType Int 
   pickupTimeLimit Int
   pickupReclaimTimeLimit Int
