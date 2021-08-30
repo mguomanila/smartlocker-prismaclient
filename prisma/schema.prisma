@@ -28,6 +28,7 @@ model LockerTimeLimit {
 
 model LockerUserType {
   id Int @id  @default(autoincrement())
+  userIds Int 
   lockerUserType String @db.VarChar(64)
   description String @db.Text
   monthlyFee Decimal @db.Decimal(12, 2)
