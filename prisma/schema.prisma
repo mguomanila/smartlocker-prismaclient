@@ -8,14 +8,14 @@ generator client {
 }
 
 model User {
-  id      BigInt  @id @default(autoincrement())
+  id      Int  @id @default(autoincrement())
   name    String?
   email   String  @unique
 }
 
 model LockerTimeLimit {
-  id BigInt @id  @default(autoincrement())
-  lockerType BigInt @db.BigInt
+  id Int @id  @default(autoincrement())
+  lockerType Int 
   pickupTimeLimit Int
   pickupReclaimTimeLimit Int
   bookingExpiry Int
@@ -26,23 +26,23 @@ model LockerTimeLimit {
 }
 
 model LockerUserType {
-  id BigInt @id  @default(autoincrement())
+  id Int @id  @default(autoincrement())
   lockerUserType String @db.VarChar(64)
   description String @db.Text
   monthlyFee Decimal @db.Decimal(12, 2)
 }
 
 model CourierType {
-  id BigInt @id  @default(autoincrement())
-  lockerType BigInt @db.BigInt
+  id Int @id  @default(autoincrement())
+  lockerType Int
   courierType String @db.VarChar(64)
   description String @db.Text
   monthlyFee Decimal  @db.Decimal(12, 2)
 }
 
 model Settings {
-  id BigInt @id @default(autoincrement())
-  lockerType BigInt @db.BigInt
+  id Int @id @default(autoincrement())
+  lockerType Int 
   sendAlertVia String @db.Bit(1)
   smsMessage String @db.Text
   appMessageSameAsSms String @db.Bit(1)
@@ -50,22 +50,22 @@ model Settings {
 }
 
 model LockersSearch{
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   country Int 
   region Int
   province Int
   cityDistrict Int
   barangay Int
-  lockerType BigInt @db.BigInt
+  lockerType Int 
 }
 
 model LockersFees {
-  id BigInt @id @default(autoincrement())
-  lockerType BigInt @db.BigInt
-  userType BigInt @db.BigInt
-  courierType BigInt @db.BigInt
-  sellerType  BigInt @db.BigInt
-  doorSizes BigInt @db.BigInt
+  id Int @id @default(autoincrement())
+  lockerType Int
+  userType Int 
+  courierType Int 
+  sellerType  Int 
+  doorSizes Int 
   initialPickupFee Decimal @db.Decimal(12, 2)
   initialReturnCancellation Decimal @db.Decimal(12, 2)
   initialShipoutFee Decimal @db.Decimal(12, 2)
@@ -80,16 +80,16 @@ model LockersFees {
 }
 
 model SellerType{
-  id BigInt @id @default(autoincrement())
-  lockerType BigInt @db.BigInt
+  id  Int @id @default(autoincrement())
+  lockerType Int 
   sellerType String
   description String @db.Text
   monthlyFee Decimal @db.Decimal(12, 2)
 }
 
 model MessageTemplate{
-  id BigInt @id  @default(autoincrement())
-  lockerType BigInt @db.BigInt
+  id Int @id  @default(autoincrement())
+  lockerType Int 
   smsMessage String @db.Text
   appMessage String @db.Text
   appMessageSameAsSms String @db.Bit(1)

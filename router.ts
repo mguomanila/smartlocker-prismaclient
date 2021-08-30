@@ -25,7 +25,10 @@ router.get('/user/id/:id', async (req, res, next) => {
 		const user = await main()
 		if(!user) res.status(202).json({})
 		else res.json(user)
-	}catch(e){ res.status(203).json({}) }
+	}catch(e){ 
+		console.log(e)
+		res.status(203).json({}) 
+	}
 })
 
 router.get('/user/email/:email', async (req, res, next) => {
@@ -40,7 +43,10 @@ router.get('/user/email/:email', async (req, res, next) => {
 		const user = await main()
 		if(!user) res.status(202).json({})
 		else res.json(user)
-	}catch(e){ res.status(203).json({}) }
+	}catch(e){ 
+		console.log(e) 
+		res.status(203).json({}) 
+	}
 })
 
 router.get('/lockertimelimit/:id', async (req, res, next) => {
@@ -58,12 +64,15 @@ router.get('/lockertimelimit/:id', async (req, res, next) => {
 		} else {
 			res.json(query)
 		}
-	}catch(e){ res.status(203).send('error') }
+	}catch(e){ 
+		console.log(e)
+		res.status(203).send('error') 
+	}
 })
 
 router.post('/lockertimelimit/:id', async (req, res, next) => {
 	const { id } = req.params
-	const data  = req.body.data || req.body
+	const data: LockerTimeLimit  = req.body.data || req.body
 
 	const { lockerTimeLimit } = prisma
 	async function main(){
@@ -89,3 +98,7 @@ router.post('/lockertimelimit/:id', async (req, res, next) => {
 		res.status(202)
 	}
 })
+
+type ID = {
+	id: number
+}
